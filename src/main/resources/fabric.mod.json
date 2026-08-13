@@ -14,7 +14,8 @@
 	"license": "MIT",
 	"icon": "assets/iron-bundles/icon.png",
 	"environment": "*",
-	"entrypoints": {
+    "accessWidener": "iron-bundles.accesswidener",
+    "entrypoints": {
 		"main": [
             "io.github.minecraftalus.ironbundles.IronBundles"
 		],

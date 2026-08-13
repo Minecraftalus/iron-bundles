@@ -1,0 +1,22 @@
+accessWidener v2 named
+accessible method net/minecraft/client/renderer/entity/ItemRenderer resolveModelOverride (Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)Lnet/minecraft/client/resources/model/BakedModel;
+accessible method net/minecraft/client/renderer/entity/ItemRenderer renderSimpleItemModel (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;Z)V
+accessible field net/minecraft/client/renderer/entity/ItemRenderer itemModelShaper Lnet/minecraft/client/renderer/ItemModelShaper;
+accessible method net/minecraft/client/renderer/entity/ItemRenderer shouldRenderItemFlat (Lnet/minecraft/world/item/ItemDisplayContext;)Z
+accessible method net/minecraft/client/renderer/entity/ItemRenderer renderItemModelRaw (Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;ZF)V
+extendable class net/minecraft/world/item/component/BundleContents
+accessible field net/minecraft/world/item/component/BundleContents$Mutable items Ljava/util/List;
+accessible field net/minecraft/world/item/component/BundleContents$Mutable selectedItem I
+accessible method net/minecraft/world/item/component/BundleContents <init> (Ljava/util/List;Lorg/apache/commons/lang3/math/Fraction;I)V
+accessible field net/minecraft/world/item/component/BundleContents items Ljava/util/List;
+accessible field net/minecraft/world/item/component/BundleContents weight Lorg/apache/commons/lang3/math/Fraction;
+accessible field net/minecraft/world/item/component/BundleContents selectedItem I
+accessible method net/minecraft/world/item/component/BundleContents computeContentWeight (Ljava/util/List;)Lorg/apache/commons/lang3/math/Fraction;
+accessible method net/minecraft/world/item/BundleItem playInsertSound (Lnet/minecraft/world/entity/Entity;)V
+accessible method net/minecraft/world/item/BundleItem playInsertFailSound (Lnet/minecraft/world/entity/Entity;)V
+accessible method net/minecraft/world/item/BundleItem broadcastChangesOnContainerMenu (Lnet/minecraft/world/entity/player/Player;)V
+accessible method net/minecraft/world/item/BundleItem playRemoveOneSound (Lnet/minecraft/world/entity/Entity;)V
+accessible field net/minecraft/world/item/BundleItem FULL_BAR_COLOR I
+accessible field net/minecraft/world/item/BundleItem BAR_COLOR I
+accessible field net/minecraft/client/gui/screens/Screen minecraft Lnet/minecraft/client/Minecraft;
+accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen addItemSlotMouseAction (Lnet/minecraft/client/gui/ItemSlotMouseAction;)V

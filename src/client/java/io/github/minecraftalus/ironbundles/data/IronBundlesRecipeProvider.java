@@ -27,7 +27,14 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
 			@Override
 			public void buildRecipes() {
 				HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
-
+                shaped(RecipeCategory.BUILDING_BLOCKS, Items.DIRT)
+                    .pattern("xxx")
+                    .pattern("aaa")
+                    .pattern("xxx")
+                    .define('x', Items.ACACIA_LOG)
+                    .define('a', Items.DIRT)
+                    .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
+                    .save(exporter);
 			}
 		};
 	}

@@ -1,5 +1,6 @@
 package io.github.minecraftalus.ironbundles;
 
+import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.ResourceLocation;
@@ -17,9 +18,7 @@ public class IronBundles implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+        IronBundlesComponents.bootstrap();
 
 		LOGGER.info("Hello Fabric world!");
 	}
