@@ -1,0 +1,39 @@
+package io.github.minecraftalus.ironbundles.data;
+
+import java.util.concurrent.CompletableFuture;
+
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.Item;
+
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.NotNull;
+
+public class IronBundlesRecipeProvider extends FabricRecipeProvider {
+	public IronBundlesRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+		super(output, registriesFuture);
+	}
+
+	@Override
+	protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+		return new RecipeProvider(registryLookup, exporter) {
+			@Override
+			public void buildRecipes() {
+				HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+
+			}
+		};
+	}
+
+	@Override
+	public @NotNull String getName() {
+		return "IronBundlesRecipeProvider";
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "iron-bundles",
+	"version": "${version}",
+	"name": "Iron Bundles",
+	"description": "Upgradable Bundles",
+	"authors": [
+		"Minecraftalus"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/iron-bundles/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+            "io.github.minecraftalus.ironbundles.IronBundles"
+		],
+		"client": [
+            "io.github.minecraftalus.ironbundles.client.IronBundlesClient"
+		],
+		"fabric-datagen": [
+            "io.github.minecraftalus.ironbundles.data.IronBundlesDataGenerator"
+		]
+	},
+	"mixins": [
+		"iron-bundles.mixins.json",
+		{
+			"config": "iron-bundles.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.2",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
