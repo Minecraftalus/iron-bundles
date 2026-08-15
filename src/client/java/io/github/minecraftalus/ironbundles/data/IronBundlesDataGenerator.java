@@ -8,5 +8,7 @@ public class IronBundlesDataGenerator implements DataGeneratorEntrypoint {
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(IronBundlesRecipeProvider::new);
+        pack.addProvider(IronBundlesItemTagProvider::new);
+        pack.addProvider(IronBundlesModelProvider::new);
     }
 }

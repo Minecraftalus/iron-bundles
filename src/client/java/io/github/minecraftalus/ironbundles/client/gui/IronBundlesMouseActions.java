@@ -1,5 +1,6 @@
 package io.github.minecraftalus.ironbundles.client.gui;
 
+import io.github.minecraftalus.ironbundles.IronBundlesTags;
 import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,7 +15,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.joml.Vector2i;
 
-@Environment(EnvType.CLIENT)
 public class IronBundlesMouseActions implements ItemSlotMouseAction {
     private final Minecraft minecraft;
     private final ScrollWheelHandler scrollWheelHandler;
@@ -25,7 +25,7 @@ public class IronBundlesMouseActions implements ItemSlotMouseAction {
     }
 
     public boolean matches(Slot slot) {
-        return slot.getItem().is(ItemTags.BUNDLES);
+        return slot.getItem().is(IronBundlesTags.IRON_BUNDLES);
     }
 
     public boolean onMouseScrolled(double d, double e, int i, ItemStack itemStack) {
@@ -62,7 +62,7 @@ public class IronBundlesMouseActions implements ItemSlotMouseAction {
         if (this.minecraft.getConnection() != null && j < IronBundleItem.getNumberOfItemsToShow(itemStack)) {
             ClientPacketListener clientPacketListener = this.minecraft.getConnection();
             IronBundleItem.toggleSelectedItem(itemStack, j);
-            clientPacketListener.send(new ServerboundSelectBundleItemPacket(i, j));
+            clientPacketListener.send(new ServerboundSelectBundleItemPacket(i, j)); //todo custom packet
         }
 
     }

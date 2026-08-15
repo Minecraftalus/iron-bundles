@@ -1,5 +1,7 @@
 package io.github.minecraftalus.ironbundles.client.mixin;
 
+import io.github.minecraftalus.ironbundles.client.gui.ClientIronBundleTooltip;
+import io.github.minecraftalus.ironbundles.component.IronBundleTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientBundleTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
@@ -12,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public interface ClientTooltipComponentMixin {
     @Inject(method = "create(Lnet/minecraft/world/inventory/tooltip/TooltipComponent;)Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipComponent;", at = @At("HEAD"), cancellable = true)
     private static void create(TooltipComponent tooltipComponent, CallbackInfoReturnable<ClientTooltipComponent> cir) {
-//        if(tooltipComponent instanceof IronBundleTooltip tooltip) {
-//           // cir.setReturnValue(new ClientBundleTooltip());
-//        }
+        if(tooltipComponent instanceof IronBundleTooltip tooltip) {
+            cir.setReturnValue(new ClientIronBundleTooltip(tooltip.contents()));
+        }
     }
 }

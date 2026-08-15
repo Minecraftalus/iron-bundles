@@ -20,3 +20,6 @@ accessible field net/minecraft/world/item/BundleItem FULL_BAR_COLOR I
 accessible field net/minecraft/world/item/BundleItem BAR_COLOR I
 accessible field net/minecraft/client/gui/screens/Screen minecraft Lnet/minecraft/client/Minecraft;
 accessible method net/minecraft/client/gui/screens/inventory/AbstractContainerScreen addItemSlotMouseAction (Lnet/minecraft/client/gui/ItemSlotMouseAction;)V
+accessible method net/minecraft/world/item/BundleItem playDropContentsSound (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)V
+extendable method net/minecraft/world/item/component/BundleContents$Mutable getMaxAmountToAdd (Lnet/minecraft/world/item/ItemStack;)I
+accessible method net/minecraft/world/item/component/BundleContents getWeight (Lnet/minecraft/world/item/ItemStack;)Lorg/apache/commons/lang3/math/Fraction;

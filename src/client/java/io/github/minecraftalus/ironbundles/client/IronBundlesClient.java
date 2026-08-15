@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.inventory.tooltip.BundleTooltip;
+import net.minecraft.world.item.BundleItem;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 
 public class IronBundlesClient implements ClientModInitializer {
 	@Override
@@ -17,5 +19,7 @@ public class IronBundlesClient implements ClientModInitializer {
 //        ClientTooltipComponent;
 //        GuiGraphics;
 //        AbstractContainerScreen;
+//        BundleItem;
+        //CraftingRecipe;
 	}
 }

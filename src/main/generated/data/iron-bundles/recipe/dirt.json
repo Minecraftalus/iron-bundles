@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": "minecraft:dirt",
+    "x": "minecraft:acacia_log"
+  },
+  "pattern": [
+    "xxx",
+    "aaa",
+    "xxx"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:dirt"
+  }
+}

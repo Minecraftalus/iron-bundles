@@ -2,7 +2,6 @@ package io.github.minecraftalus.ironbundles.item.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import io.github.minecraftalus.ironbundles.IronBundlesComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -38,6 +37,18 @@ public class IronBundlesContents extends BundleContents {
     public static class Mutable extends BundleContents.Mutable {
         public Mutable(IronBundlesContents bundleContents) {
             super(bundleContents);
+        }
+
+        @Override
+        protected int getMaxAmountToAdd(ItemStack itemStack) {
+            Fraction fraction = Fraction.ONE.subtract(this.weight());
+
+            // 1 - 32/64 = 1/2 space remaining
+            // fraction.divideBy(getWeight(itemStack)).intValue()
+            // 1/2 /
+
+
+            return Math.max(fraction.divideBy(getWeight(itemStack)).intValue(), 0);
         }
 
         @Override

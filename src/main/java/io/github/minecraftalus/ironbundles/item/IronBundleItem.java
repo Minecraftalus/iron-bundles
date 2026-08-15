@@ -4,15 +4,21 @@ import io.github.minecraftalus.ironbundles.IronBundlesComponents;
 import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.tooltip.BundleTooltip;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.component.BundleContents;
+import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.math.Fraction;
 
 import java.util.Optional;
@@ -21,6 +27,7 @@ public class IronBundleItem extends BundleItem {
     public IronBundleItem(
         ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Properties properties) {
         super(resourceLocation, resourceLocation2, properties);
+        System.out.println("Created");
     }
 
     public static float getFullnessDisplay(ItemStack itemStack) {
@@ -28,6 +35,13 @@ public class IronBundleItem extends BundleItem {
         return bundleContents.weight().floatValue();
     }
 
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
+        return !itemStack.has(DataComponents.HIDE_TOOLTIP) && !itemStack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP) ? Optional.ofNullable(itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS)).map(
+            BundleTooltip::new) : Optional.empty();
+    }
+
+    @Override
     public boolean overrideStackedOnOther(ItemStack itemStack, Slot slot, ClickAction clickAction, Player player) {
         IronBundlesContents bundleContents = itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS);
         if (bundleContents == null) {
@@ -65,6 +79,7 @@ public class IronBundleItem extends BundleItem {
         }
     }
 
+    @Override
     public boolean overrideOtherStackedOnMe(
         ItemStack itemStack, ItemStack itemStack2, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
         if (clickAction == ClickAction.PRIMARY && itemStack2.isEmpty()) {
@@ -106,16 +121,19 @@ public class IronBundleItem extends BundleItem {
         }
     }
 
+    @Override
     public boolean isBarVisible(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
         return bundleContents.weight().compareTo(Fraction.ZERO) > 0;
     }
 
+    @Override
     public int getBarWidth(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
         return Math.min(1 + Mth.mulAndTruncate(bundleContents.weight(), 12), 13);
     }
 
+    @Override
     public int getBarColor(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
         return bundleContents.weight().compareTo(Fraction.ONE) >= 0 ? FULL_BAR_COLOR : BAR_COLOR;
@@ -185,5 +203,27 @@ public class IronBundleItem extends BundleItem {
             itemEntity.getItem().set(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
             ItemUtils.onContainerDestroyed(itemEntity, bundleContents.itemsCopy());
         }
+    }
+
+    public void onUseTick(Level level, LivingEntity livingEntity, ItemStack itemStack, int i) {
+        if (!level.isClientSide && livingEntity instanceof Player player) {
+            int j = this.getUseDuration(itemStack, livingEntity);
+            boolean bl = i == j;
+            if (bl || i < j - 10 && i % 2 == 0) {
+                this.dropContent(level, player, itemStack);
+            }
+        }
+    }
+
+    private void dropContent(Level level, Player player, ItemStack itemStack) {
+        if (this.dropContent(itemStack, player)) {
+            playDropContentsSound(level, player);
+            player.awardStat(Stats.ITEM_USED.get(this));
+        }
+    }
+
+    @Override
+    public boolean canFitInsideContainerItems() {
+        return false;
     }
 }
