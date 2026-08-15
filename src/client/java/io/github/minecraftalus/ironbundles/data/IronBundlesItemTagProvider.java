@@ -1,13 +1,11 @@
 package io.github.minecraftalus.ironbundles.data;
 
 import io.github.minecraftalus.ironbundles.IronBundlesTags;
-import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;

@@ -10,5 +10,6 @@ public class IronBundlesDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(IronBundlesRecipeProvider::new);
         pack.addProvider(IronBundlesItemTagProvider::new);
         pack.addProvider(IronBundlesModelProvider::new);
+        pack.addProvider(IronBundlesTextureProvider::new);
     }
 }
