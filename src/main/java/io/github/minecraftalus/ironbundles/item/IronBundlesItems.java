@@ -3,6 +3,7 @@ package io.github.minecraftalus.ironbundles.item;
 import static io.github.minecraftalus.ironbundles.IronBundlesResourceKeys.*;
 
 import io.github.minecraftalus.ironbundles.IronBundlesComponents;
+import io.github.minecraftalus.ironbundles.component.BundleTier;
 import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,7 @@ public class IronBundlesItems {
         (properties) -> new IronBundleItem(
             ResourceLocation.withDefaultNamespace("red_bundle_open_front"),
             ResourceLocation.withDefaultNamespace("red_bundle_open_back"),
+            BundleTier.IRON.getWeight(),
             properties
                 .stacksTo(1)
                 .component(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY)));

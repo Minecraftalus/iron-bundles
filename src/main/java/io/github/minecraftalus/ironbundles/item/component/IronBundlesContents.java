@@ -41,11 +41,7 @@ public class IronBundlesContents extends BundleContents {
 
         @Override
         protected int getMaxAmountToAdd(ItemStack itemStack) {
-            Fraction fraction = Fraction.ONE.subtract(this.weight());
-
-            // 1 - 32/64 = 1/2 space remaining
-            // fraction.divideBy(getWeight(itemStack)).intValue()
-            // 1/2 /
+            Fraction fraction = Fraction.getFraction(2).subtract(this.weight());
 
             return Math.max(fraction.divideBy(getWeight(itemStack)).intValue(), 0);
         }

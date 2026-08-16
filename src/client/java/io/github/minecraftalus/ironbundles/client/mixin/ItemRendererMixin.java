@@ -1,10 +1,12 @@
 package io.github.minecraftalus.ironbundles.client.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -31,23 +33,22 @@ public class ItemRendererMixin {
         CallbackInfo ci
     ) {
         ItemRenderer thiz = (ItemRenderer) (Object) this;
-        // todo implement
-//        Item item = itemStack.getItem();
-//        if (item instanceof BundleItem bundleItem) {
-//
-//            if (BundleItem.hasSelectedItem(itemStack)) {
-//                boolean bl2 = ItemRenderer.shouldRenderItemFlat(itemDisplayContext);
-//                BakedModel bakedModel2 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openBackModel()), itemStack, level,
-//                    livingEntity, k);
-//                thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel2, bl2, -1.5F);
-//                ItemStack itemStack2 = BundleItem.getSelectedItemStack(itemStack);
-//                BakedModel bakedModel3 = thiz.getModel(itemStack2, level, livingEntity, k);
-//                thiz.renderSimpleItemModel(itemStack2, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel3, bl2);
-//                BakedModel bakedModel4 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openFrontModel()), itemStack, level, livingEntity, k);
-//                thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel4, bl2, 0.5F);
-//            } else {
-//                thiz.render(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel);
-//            }
-//        }
+        Item item = itemStack.getItem();
+        if (item instanceof IronBundleItem bundleItem) {
+
+            if (IronBundleItem.hasSelectedItem(itemStack)) {
+                boolean bl2 = ItemRenderer.shouldRenderItemFlat(itemDisplayContext);
+                BakedModel bakedModel2 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openBackModel()), itemStack, level,
+                    livingEntity, k);
+                thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel2, bl2, -1.5F);
+                ItemStack itemStack2 = IronBundleItem.getSelectedItemStack(itemStack);
+                BakedModel bakedModel3 = thiz.getModel(itemStack2, level, livingEntity, k);
+                thiz.renderSimpleItemModel(itemStack2, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel3, bl2);
+                BakedModel bakedModel4 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openFrontModel()), itemStack, level, livingEntity, k);
+                thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel4, bl2, 0.5F);
+            } else {
+                thiz.render(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel);
+            }
+        }
     }
 }

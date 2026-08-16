@@ -10,12 +10,14 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -83,7 +85,6 @@ public class BundleUpgradeRecipe implements CraftingRecipe {
                 resultStack = currentStack;
             }
         }
-
         return resultStack.transmuteCopy(this.result.value(), 1);
     }
 

@@ -14,7 +14,7 @@ public interface ClientTooltipComponentMixin {
     @Inject(method = "create(Lnet/minecraft/world/inventory/tooltip/TooltipComponent;)Lnet/minecraft/client/gui/screens/inventory/tooltip/ClientTooltipComponent;", at = @At("HEAD"), cancellable = true)
     private static void create(TooltipComponent tooltipComponent, CallbackInfoReturnable<ClientTooltipComponent> cir) {
         if (tooltipComponent instanceof IronBundleTooltip tooltip) {
-            cir.setReturnValue(new ClientIronBundleTooltip(tooltip.contents()));
+            cir.setReturnValue(new ClientIronBundleTooltip(tooltip.contents(), tooltip.maxWeight()));
         }
     }
 }

@@ -3,6 +3,7 @@ package io.github.minecraftalus.ironbundles.item;
 import java.util.Optional;
 
 import io.github.minecraftalus.ironbundles.IronBundlesComponents;
+import io.github.minecraftalus.ironbundles.component.IronBundleTooltip;
 import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
@@ -21,25 +22,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.math.Fraction;
+import org.jetbrains.annotations.NotNull;
 
 public class IronBundleItem extends BundleItem {
+    private Fraction maxWeight;
+
     public IronBundleItem(
-        ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Properties properties
+        ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Fraction maxWeight, Properties properties
     ) {
         super(resourceLocation, resourceLocation2, properties);
-        System.out.println("Created");
-    }
-
-    public static float getFullnessDisplay(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
-        return bundleContents.weight().floatValue();
+        this.maxWeight=maxWeight;
     }
 
     @Override
-    public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
+    public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
         return !itemStack.has(DataComponents.HIDE_TOOLTIP) && !itemStack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
             ? Optional.ofNullable(itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS)).map(
-                BundleTooltip::new)
+            (contents)->new IronBundleTooltip(contents, maxWeight))
             : Optional.empty();
     }
 
@@ -138,13 +137,14 @@ public class IronBundleItem extends BundleItem {
     @Override
     public int getBarWidth(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
-        return Math.min(1 + Mth.mulAndTruncate(bundleContents.weight(), 12), 13);
+        return Math.min(1 + Mth.mulAndTruncate(bundleContents.weight().divideBy(this.maxWeight), 12),
+            MAX_BAR_WIDTH);
     }
 
     @Override
     public int getBarColor(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
-        return bundleContents.weight().compareTo(Fraction.ONE) >= 0 ? FULL_BAR_COLOR : BAR_COLOR;
+        return bundleContents.weight().compareTo(this.maxWeight) >= 0 ? FULL_BAR_COLOR : BAR_COLOR;
     }
 
     public static void toggleSelectedItem(ItemStack itemStack, int i) {
