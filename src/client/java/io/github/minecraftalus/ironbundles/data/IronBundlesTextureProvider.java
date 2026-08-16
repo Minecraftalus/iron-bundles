@@ -112,17 +112,17 @@ public class IronBundlesTextureProvider implements DataProvider {
     private BufferedImage loadItemTexture(ResourceLocation location) throws IOException {
         String assetPath = "assets/" + location.getNamespace() + "/textures/" + location.getPath() + ".png";
 
-        AtomicReference<Path> foundPath = new AtomicReference<>();
+        Path foundPath = null;
 
         if (location.getNamespace().equals(IronBundles.MOD_ID)) {
-            dataOutput.getModContainer().findPath(assetPath).ifPresent(foundPath::set);
+            foundPath = dataOutput.getModContainer().findPath(assetPath).orElse(null);
         }
 
-        if (foundPath.get() == null) {
+        if (foundPath == null) {
             var url = Thread.currentThread().getContextClassLoader().getResource(assetPath);
             if (url != null) {
                 try {
-                    foundPath.set(Path.of(url.toURI()));
+                    foundPath = Path.of(url.toURI());
                 } catch (Exception ignored) {
                     try (var inputStream = url.openStream()) {
                         return ImageIO.read(inputStream);
@@ -131,8 +131,8 @@ public class IronBundlesTextureProvider implements DataProvider {
             }
         }
 
-        if (foundPath.get() != null && Files.exists(foundPath.get())) {
-            try (var inputStream = Files.newInputStream(foundPath.get())) {
+        if (foundPath != null && Files.exists(foundPath)) {
+            try (var inputStream = Files.newInputStream(foundPath)) {
                 return ImageIO.read(inputStream);
             }
         }

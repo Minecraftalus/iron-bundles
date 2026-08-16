@@ -14,6 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +34,8 @@ public class IronBundles implements ModInitializer {
     public void onInitialize() {
         IronBundlesComponents.bootstrap();
         IronBundlesItems.bootstrap();
+        IronBundlesRecipes.bootstrap();
+
 
         LOGGER.info("Hello Fabric world!");
     }
