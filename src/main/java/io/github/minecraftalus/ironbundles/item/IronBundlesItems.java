@@ -19,7 +19,17 @@ public class IronBundlesItems {
             BundleTier.IRON.getWeight(),
             properties
                 .stacksTo(1)
-                .component(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY)));
+                .component(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(BundleTier.IRON.getWeight()))));
+
+    public static final Item GOLD_BUNDLE = Items.registerItem(
+        GOLD_BUNDLE_KEY,
+        (properties) -> new IronBundleItem(
+            ResourceLocation.withDefaultNamespace("blue_bundle_open_front"),
+            ResourceLocation.withDefaultNamespace("blue_bundle_open_back"),
+            BundleTier.GOLD.getWeight(),
+            properties
+                .stacksTo(1)
+                .component(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(BundleTier.GOLD.getWeight()))));
 
     public static Item bootstrap() {
         return IRON_BUNDLE;

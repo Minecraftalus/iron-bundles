@@ -21,6 +21,7 @@ public class IronBundlesModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         itemModelGenerator.generateFlatItem(IronBundlesItems.IRON_BUNDLE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(IronBundlesItems.GOLD_BUNDLE, ModelTemplates.FLAT_ITEM);
     }
 
     @Override

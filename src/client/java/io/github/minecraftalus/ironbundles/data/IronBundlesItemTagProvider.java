@@ -20,8 +20,8 @@ public class IronBundlesItemTagProvider extends FabricTagProvider.ItemTagProvide
         getOrCreateTagBuilder(IronBundlesTags.IRON_BUNDLES)
             .add(IronBundlesItems.IRON_BUNDLE);
 
-        getOrCreateTagBuilder(ItemTags.BUNDLES)
-            .add(IronBundlesItems.IRON_BUNDLE);
+//        getOrCreateTagBuilder(ItemTags.BUNDLES)
+//            .add(IronBundlesItems.IRON_BUNDLE);
     }
 
     @Override

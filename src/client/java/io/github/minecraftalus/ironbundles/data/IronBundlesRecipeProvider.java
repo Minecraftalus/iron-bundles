@@ -2,6 +2,8 @@ package io.github.minecraftalus.ironbundles.data;
 
 import java.util.concurrent.CompletableFuture;
 
+import io.github.minecraftalus.ironbundles.item.IronBundleItem;
+import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -9,8 +11,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.TransmuteRecipeBuilder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 public class IronBundlesRecipeProvider extends FabricRecipeProvider {
@@ -30,6 +34,15 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
                     .pattern("xxx")
                     .define('x', Items.ACACIA_LOG)
                     .define('a', Items.DIRT)
+                    .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
+                    .save(exporter);
+
+                TransmuteRecipeBuilder.transmute(
+                        RecipeCategory.TOOLS,
+                        Ingredient.of(IronBundlesItems.IRON_BUNDLE),
+                        Ingredient.of(Items.BLUE_DYE),
+                        IronBundlesItems.GOLD_BUNDLE
+                    )
                     .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
                     .save(exporter);
             }

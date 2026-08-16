@@ -40,6 +40,11 @@ public class IronBundlesTextureProvider implements DataProvider {
             vanillaTexture("bundle"),
             modTexture("iron_overlay"),
             textureConsumer);
+        layeredItemTexture(
+            IronBundlesItems.GOLD_BUNDLE,
+            vanillaTexture("red_bundle"),
+            modTexture("iron_overlay"),
+            textureConsumer);
     }
 
     private void layeredItemTexture(Item item, ResourceLocation layer0, ResourceLocation layer1, Consumer<LayeredTextureHolder> textureConsumer) {

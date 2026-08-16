@@ -130,20 +130,20 @@ public class IronBundleItem extends BundleItem {
 
     @Override
     public boolean isBarVisible(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(maxWeight));
         return bundleContents.weight().compareTo(Fraction.ZERO) > 0;
     }
 
     @Override
     public int getBarWidth(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(maxWeight));
         return Math.min(1 + Mth.mulAndTruncate(bundleContents.weight().divideBy(this.maxWeight), 12),
             MAX_BAR_WIDTH);
     }
 
     @Override
     public int getBarColor(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(maxWeight));
         return bundleContents.weight().compareTo(this.maxWeight) >= 0 ? FULL_BAR_COLOR : BAR_COLOR;
     }
 
@@ -157,26 +157,26 @@ public class IronBundleItem extends BundleItem {
     }
 
     public static boolean hasSelectedItem(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getSelectedItem() != -1;
     }
 
     public static int getSelectedItem(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getSelectedItem();
     }
 
     public static ItemStack getSelectedItemStack(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(
             IronBundlesComponents.IRON_BUNDLES_CONTENTS,
-            IronBundlesContents.EMPTY);
+            IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getItemUnsafe(bundleContents.getSelectedItem());
     }
 
     public static int getNumberOfItemsToShow(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(
             IronBundlesComponents.IRON_BUNDLES_CONTENTS,
-            IronBundlesContents.EMPTY);
+            IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getNumberOfItemsToShow();
     }
 
@@ -210,7 +210,7 @@ public class IronBundleItem extends BundleItem {
     public void onDestroyed(ItemEntity itemEntity) {
         IronBundlesContents bundleContents = itemEntity.getItem().get(IronBundlesComponents.IRON_BUNDLES_CONTENTS);
         if (bundleContents != null) {
-            itemEntity.getItem().set(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.EMPTY);
+            itemEntity.getItem().set(IronBundlesComponents.IRON_BUNDLES_CONTENTS, IronBundlesContents.empty(maxWeight));
             ItemUtils.onContainerDestroyed(itemEntity, bundleContents.itemsCopy());
         }
     }
