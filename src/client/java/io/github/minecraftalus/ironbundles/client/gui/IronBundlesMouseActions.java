@@ -2,14 +2,11 @@ package io.github.minecraftalus.ironbundles.client.gui;
 
 import io.github.minecraftalus.ironbundles.IronBundlesTags;
 import io.github.minecraftalus.ironbundles.item.IronBundleItem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ScrollWheelHandler;
 import net.minecraft.client.gui.ItemSlotMouseAction;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ServerboundSelectBundleItemPacket;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +34,7 @@ public class IronBundlesMouseActions implements ItemSlotMouseAction {
             int k = vector2i.y == 0 ? -vector2i.x : vector2i.y;
             if (k != 0) {
                 int l = IronBundleItem.getSelectedItem(itemStack);
-                int m = ScrollWheelHandler.getNextScrollWheelSelection((double)k, l, j);
+                int m = ScrollWheelHandler.getNextScrollWheelSelection((double) k, l, j);
                 if (l != m) {
                     this.toggleSelectedBundleItem(itemStack, i, m);
                 }
@@ -62,7 +59,7 @@ public class IronBundlesMouseActions implements ItemSlotMouseAction {
         if (this.minecraft.getConnection() != null && j < IronBundleItem.getNumberOfItemsToShow(itemStack)) {
             ClientPacketListener clientPacketListener = this.minecraft.getConnection();
             IronBundleItem.toggleSelectedItem(itemStack, j);
-            clientPacketListener.send(new ServerboundSelectBundleItemPacket(i, j)); //todo custom packet
+            clientPacketListener.send(new ServerboundSelectBundleItemPacket(i, j)); // todo custom packet
         }
 
     }

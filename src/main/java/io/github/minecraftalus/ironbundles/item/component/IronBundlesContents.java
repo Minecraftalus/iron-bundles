@@ -1,5 +1,7 @@
 package io.github.minecraftalus.ironbundles.item.component;
 
+import java.util.List;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -9,8 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BundleContents;
 import org.apache.commons.lang3.math.Fraction;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class IronBundlesContents extends BundleContents {
     public static final Codec<IronBundlesContents> CODEC;
@@ -47,7 +47,6 @@ public class IronBundlesContents extends BundleContents {
             // fraction.divideBy(getWeight(itemStack)).intValue()
             // 1/2 /
 
-
             return Math.max(fraction.divideBy(getWeight(itemStack)).intValue(), 0);
         }
 
@@ -58,7 +57,9 @@ public class IronBundlesContents extends BundleContents {
     }
 
     static {
-        CODEC = ItemStack.CODEC.listOf().flatXmap(IronBundlesContents::checkAndCreate, (ironBundleContents) -> DataResult.success(ironBundleContents.items));
-        STREAM_CODEC = ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()).map(IronBundlesContents::new, (ironBundleContents) -> ironBundleContents.items);
+        CODEC = ItemStack.CODEC.listOf()
+            .flatXmap(IronBundlesContents::checkAndCreate, (ironBundleContents) -> DataResult.success(ironBundleContents.items));
+        STREAM_CODEC = ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list())
+            .map(IronBundlesContents::new, (ironBundleContents) -> ironBundleContents.items);
     }
 }

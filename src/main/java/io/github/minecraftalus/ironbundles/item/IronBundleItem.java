@@ -1,5 +1,7 @@
 package io.github.minecraftalus.ironbundles.item;
 
+import java.util.Optional;
+
 import io.github.minecraftalus.ironbundles.IronBundlesComponents;
 import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.minecraft.core.component.DataComponents;
@@ -17,15 +19,13 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.math.Fraction;
 
-import java.util.Optional;
-
 public class IronBundleItem extends BundleItem {
     public IronBundleItem(
-        ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Properties properties) {
+        ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Properties properties
+    ) {
         super(resourceLocation, resourceLocation2, properties);
         System.out.println("Created");
     }
@@ -37,8 +37,10 @@ public class IronBundleItem extends BundleItem {
 
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
-        return !itemStack.has(DataComponents.HIDE_TOOLTIP) && !itemStack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP) ? Optional.ofNullable(itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS)).map(
-            BundleTooltip::new) : Optional.empty();
+        return !itemStack.has(DataComponents.HIDE_TOOLTIP) && !itemStack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
+            ? Optional.ofNullable(itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS)).map(
+                BundleTooltip::new)
+            : Optional.empty();
     }
 
     @Override
@@ -81,7 +83,13 @@ public class IronBundleItem extends BundleItem {
 
     @Override
     public boolean overrideOtherStackedOnMe(
-        ItemStack itemStack, ItemStack itemStack2, Slot slot, ClickAction clickAction, Player player, SlotAccess slotAccess) {
+        ItemStack itemStack,
+        ItemStack itemStack2,
+        Slot slot,
+        ClickAction clickAction,
+        Player player,
+        SlotAccess slotAccess
+    ) {
         if (clickAction == ClickAction.PRIMARY && itemStack2.isEmpty()) {
             toggleSelectedItem(itemStack, -1);
             return false;
@@ -159,13 +167,15 @@ public class IronBundleItem extends BundleItem {
     }
 
     public static ItemStack getSelectedItemStack(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.EMPTY);
         return bundleContents.getItemUnsafe(bundleContents.getSelectedItem());
     }
 
     public static int getNumberOfItemsToShow(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.EMPTY);
         return bundleContents.getNumberOfItemsToShow();
     }

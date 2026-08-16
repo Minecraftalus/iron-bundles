@@ -1,6 +1,7 @@
 plugins {
 	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id 'maven-publish'
+    id 'com.diffplug.spotless' version '8.9.0'
 }
 
 repositories {
@@ -87,4 +88,17 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+spotless {
+
+    java {
+        target("src/*/java/**/*.java")
+
+        toggleOffOn()
+        eclipse().configFile('config/eclipse-format.xml')
+
+        importOrder("\\#", "java", "javax", "")
+        removeUnusedImports()
+    }
 }

@@ -1,5 +1,18 @@
 package io.github.minecraftalus.ironbundles.data;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
+import javax.imageio.ImageIO;
+
 import com.google.common.hash.Hashing;
 import io.github.minecraftalus.ironbundles.IronBundles;
 import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
@@ -11,18 +24,6 @@ import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 public class IronBundlesTextureProvider implements DataProvider {
     private final FabricDataOutput dataOutput;
@@ -34,19 +35,19 @@ public class IronBundlesTextureProvider implements DataProvider {
     }
 
     private void createTextureProvider(Consumer<LayeredTextureHolder> textureConsumer) {
-        layeredItemTexture(IronBundlesItems.IRON_BUNDLE,
+        layeredItemTexture(
+            IronBundlesItems.IRON_BUNDLE,
             vanillaTexture("bundle"),
             modTexture("iron_overlay"),
-            textureConsumer
-        );
+            textureConsumer);
     }
 
     private void layeredItemTexture(Item item, ResourceLocation layer0, ResourceLocation layer1, Consumer<LayeredTextureHolder> textureConsumer) {
-        textureConsumer.accept(new LayeredTextureHolder(
-            ModelLocationUtils.getModelLocation(item),
-            layer0,
-            layer1
-        ));
+        textureConsumer.accept(
+            new LayeredTextureHolder(
+                ModelLocationUtils.getModelLocation(item),
+                layer0,
+                layer1));
     }
 
     @Override
@@ -73,8 +74,7 @@ public class IronBundlesTextureProvider implements DataProvider {
         BufferedImage combined = new BufferedImage(
             baseImage.getWidth(),
             baseImage.getHeight(),
-            BufferedImage.TYPE_INT_ARGB
-        );
+            BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = combined.createGraphics();
         g2d.drawImage(baseImage, 0, 0, null);
@@ -105,8 +105,7 @@ public class IronBundlesTextureProvider implements DataProvider {
         return "IronBundlesTextureProvider";
     }
 
-    private record LayeredTextureHolder(ResourceLocation file, ResourceLocation layer0, ResourceLocation layer1) {
-    }
+    private record LayeredTextureHolder(ResourceLocation file, ResourceLocation layer0, ResourceLocation layer1) {}
 
     // Hacky way to load images, probably shouldnt do this but whatever
     private BufferedImage loadItemTexture(ResourceLocation location) throws IOException {

@@ -5,12 +5,11 @@
 
 package io.github.minecraftalus.ironbundles;
 
+import java.util.List;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import java.util.List;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -38,7 +37,8 @@ public class BundleUpgradeRecipe implements CraftingRecipe {
     private PlacementInfo placementInfo;
 
     public BundleUpgradeRecipe(
-        String string, CraftingBookCategory craftingBookCategory, Ingredient ingredient, Ingredient ingredient2, Holder<Item> holder) {
+        String string, CraftingBookCategory craftingBookCategory, Ingredient ingredient, Ingredient ingredient2, Holder<Item> holder
+    ) {
         this.group = string;
         this.category = craftingBookCategory;
         this.input = ingredient;
@@ -90,7 +90,9 @@ public class BundleUpgradeRecipe implements CraftingRecipe {
     @Override
     public @NotNull List<RecipeDisplay> display() {
         return List.of(
-            new ShapelessCraftingRecipeDisplay(List.of(this.input.display(), this.material.display()), new SlotDisplay.ItemSlotDisplay(this.result),
+            new ShapelessCraftingRecipeDisplay(
+                List.of(this.input.display(), this.material.display()),
+                new SlotDisplay.ItemSlotDisplay(this.result),
                 new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)));
     }
 
@@ -138,10 +140,18 @@ public class BundleUpgradeRecipe implements CraftingRecipe {
         }
 
         static {
-            STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.STRING_UTF8, (upgradeRecipe) -> upgradeRecipe.group,
-                CraftingBookCategory.STREAM_CODEC, (upgradeRecipe) -> upgradeRecipe.category, Ingredient.CONTENTS_STREAM_CODEC,
-                (upgradeRecipe) -> upgradeRecipe.input, Ingredient.CONTENTS_STREAM_CODEC, (upgradeRecipe) -> upgradeRecipe.material,
-                ByteBufCodecs.holderRegistry(Registries.ITEM), (upgradeRecipe) -> upgradeRecipe.result, BundleUpgradeRecipe::new);
+            STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.STRING_UTF8,
+                (upgradeRecipe) -> upgradeRecipe.group,
+                CraftingBookCategory.STREAM_CODEC,
+                (upgradeRecipe) -> upgradeRecipe.category,
+                Ingredient.CONTENTS_STREAM_CODEC,
+                (upgradeRecipe) -> upgradeRecipe.input,
+                Ingredient.CONTENTS_STREAM_CODEC,
+                (upgradeRecipe) -> upgradeRecipe.material,
+                ByteBufCodecs.holderRegistry(Registries.ITEM),
+                (upgradeRecipe) -> upgradeRecipe.result,
+                BundleUpgradeRecipe::new);
         }
     }
 }

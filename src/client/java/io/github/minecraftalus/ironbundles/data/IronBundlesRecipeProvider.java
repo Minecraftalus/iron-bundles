@@ -1,5 +1,7 @@
 package io.github.minecraftalus.ironbundles.data;
 
+import java.util.concurrent.CompletableFuture;
+
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
@@ -11,19 +13,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.CompletableFuture;
-
 public class IronBundlesRecipeProvider extends FabricRecipeProvider {
-	public IronBundlesRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-		super(output, registriesFuture);
-	}
+    public IronBundlesRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture);
+    }
 
-	@Override
-	protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
-		return new RecipeProvider(registryLookup, exporter) {
-			@Override
-			public void buildRecipes() {
-				HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
+    @Override
+    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
+        return new RecipeProvider(registryLookup, exporter) {
+            @Override
+            public void buildRecipes() {
+                HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
                 shaped(RecipeCategory.BUILDING_BLOCKS, Items.DIRT)
                     .pattern("xxx")
                     .pattern("aaa")
@@ -32,12 +32,12 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
                     .define('a', Items.DIRT)
                     .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
                     .save(exporter);
-			}
-		};
-	}
+            }
+        };
+    }
 
-	@Override
-	public @NotNull String getName() {
-		return "IronBundlesRecipeProvider";
-	}
+    @Override
+    public @NotNull String getName() {
+        return "IronBundlesRecipeProvider";
+    }
 }

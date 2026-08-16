@@ -5,8 +5,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.BundleItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,13 +15,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ItemRenderer.class)
 public class ItemRendererMixin {
-	@Inject(method = "renderBundleItem", at = @At("HEAD"))
-	private void renderBundleItem(
-        ItemStack itemStack, ItemDisplayContext itemDisplayContext, boolean bl, PoseStack poseStack, MultiBufferSource multiBufferSource, int i,
-        int j, BakedModel bakedModel, Level level, LivingEntity livingEntity, int k, CallbackInfo ci
+    @Inject(method = "renderBundleItem", at = @At("HEAD"))
+    private void renderBundleItem(
+        ItemStack itemStack,
+        ItemDisplayContext itemDisplayContext,
+        boolean bl,
+        PoseStack poseStack,
+        MultiBufferSource multiBufferSource,
+        int i,
+        int j,
+        BakedModel bakedModel,
+        Level level,
+        LivingEntity livingEntity,
+        int k,
+        CallbackInfo ci
     ) {
         ItemRenderer thiz = (ItemRenderer) (Object) this;
-        //todo implement
+        // todo implement
 //        Item item = itemStack.getItem();
 //        if (item instanceof BundleItem bundleItem) {
 //
@@ -41,5 +49,5 @@ public class ItemRendererMixin {
 //                thiz.render(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel);
 //            }
 //        }
-	}
+    }
 }
