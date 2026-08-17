@@ -71,20 +71,20 @@ public class IronBundlesContents extends BundleContents {
                 } else {
                     this.weight = this.weight.add(BundleContents.getWeight(stackToInsert).multiplyBy(Fraction.getFraction(amountToAdd, 1)));
                     int itemIndex = this.findStackIndex(stackToInsert);
-                    if (itemIndex != -1 && this.items.get(itemIndex).getCount() < this.items.get(itemIndex).getMaxStackSize()) {
+                    if (itemIndex != -1) {
                         ItemStack itemInBundle = this.items.remove(itemIndex);
 
                         int amountLeft = amountToAdd;
                         int amountThisStack = Math.min(itemInBundle.getCount() + amountLeft, itemInBundle.getMaxStackSize());
                         ItemStack firstStack = itemInBundle.copyWithCount(amountThisStack);
                         this.items.addFirst(firstStack);
-                        amountLeft-=amountThisStack;
+                        amountLeft -= amountThisStack - itemInBundle.getCount();
 
                         while (amountLeft > 0) {
                             amountThisStack = Math.min(amountLeft, itemInBundle.getMaxStackSize());
                             ItemStack nextStack = itemInBundle.copyWithCount(amountThisStack);
                             this.items.addFirst(nextStack);
-                            amountLeft-=amountThisStack;
+                            amountLeft -= amountThisStack;
                         }
 
                         stackToInsert.shrink(amountToAdd);
