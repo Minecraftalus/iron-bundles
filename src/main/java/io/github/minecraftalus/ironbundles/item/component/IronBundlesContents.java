@@ -5,7 +5,6 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.minecraftalus.ironbundles.component.BundleTier;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,7 +17,7 @@ public class IronBundlesContents extends BundleContents {
     public static final Codec<IronBundlesContents> CODEC;
     public static final StreamCodec<RegistryFriendlyByteBuf, IronBundlesContents> STREAM_CODEC;
 
-    private final Fraction maxWeight;
+    private Fraction maxWeight;
 
     public IronBundlesContents(List<ItemStack> list, Fraction maxWeight) {
         super(list);
@@ -43,6 +42,10 @@ public class IronBundlesContents extends BundleContents {
         return new IronBundlesContents(List.of(), maxWeight);
     }
 
+    public void setMaxWeight(Fraction maxWeight) {
+        this.maxWeight = maxWeight;
+    }
+
     public static class Mutable extends BundleContents.Mutable {
         private final Fraction maxWeight;
 
@@ -55,6 +58,43 @@ public class IronBundlesContents extends BundleContents {
         protected int getMaxAmountToAdd(ItemStack itemStack) {
             Fraction fraction = maxWeight.subtract(this.weight());
             return Math.max(fraction.divideBy(getWeight(itemStack)).intValue(), 0);
+        }
+
+        @Override
+        public int tryInsert(ItemStack stackToInsert) {
+            if (!BundleContents.canItemBeInBundle(stackToInsert)) {
+                return 0;
+            } else {
+                int amountToAdd = Math.min(stackToInsert.getCount(), this.getMaxAmountToAdd(stackToInsert));
+                if (amountToAdd == 0) {
+                    return 0;
+                } else {
+                    this.weight = this.weight.add(BundleContents.getWeight(stackToInsert).multiplyBy(Fraction.getFraction(amountToAdd, 1)));
+                    int itemIndex = this.findStackIndex(stackToInsert);
+                    if (itemIndex != -1 && this.items.get(itemIndex).getCount() < this.items.get(itemIndex).getMaxStackSize()) {
+                        ItemStack itemInBundle = this.items.remove(itemIndex);
+
+                        int amountLeft = amountToAdd;
+                        int amountThisStack = Math.min(itemInBundle.getCount() + amountLeft, itemInBundle.getMaxStackSize());
+                        ItemStack firstStack = itemInBundle.copyWithCount(amountThisStack);
+                        this.items.addFirst(firstStack);
+                        amountLeft-=amountThisStack;
+
+                        while (amountLeft > 0) {
+                            amountThisStack = Math.min(amountLeft, itemInBundle.getMaxStackSize());
+                            ItemStack nextStack = itemInBundle.copyWithCount(amountThisStack);
+                            this.items.addFirst(nextStack);
+                            amountLeft-=amountThisStack;
+                        }
+
+                        stackToInsert.shrink(amountToAdd);
+                    } else {
+                        this.items.addFirst(stackToInsert.split(amountToAdd));
+                    }
+
+                    return amountToAdd;
+                }
+            }
         }
 
         @Override

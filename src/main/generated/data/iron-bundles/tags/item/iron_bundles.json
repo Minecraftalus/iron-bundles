@@ -1,5 +1,6 @@
 {
   "values": [
-    "iron-bundles:iron_bundle"
+    "iron-bundles:iron_bundle",
+    "iron-bundles:gold_bundle"
   ]
 }

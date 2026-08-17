@@ -10,22 +10,24 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.github.minecraftalus.ironbundles.item.IronBundleItem;
+import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.math.Fraction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,9 +84,18 @@ public class BundleUpgradeRecipe implements CraftingRecipe {
         for (int i = 0; i < craftingInput.size(); i++) {
             ItemStack currentStack = craftingInput.getItem(i);
             if (!currentStack.isEmpty() && this.input.test(currentStack) && currentStack.getItem() != this.result.value()) {
-                resultStack = currentStack;
+                resultStack = currentStack.copy();
             }
         }
+
+        BundleContents bundleContents = resultStack.get(DataComponents.BUNDLE_CONTENTS);
+        if (bundleContents != null) {
+            resultStack.set(DataComponents.BUNDLE_CONTENTS, null);
+            resultStack.set(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+                new IronBundlesContents(bundleContents.items, Fraction.ONE));
+            // one is fine because craftpostprocess sets the real size in IronBundleItem
+        }
+
         return resultStack.transmuteCopy(this.result.value(), 1);
     }
 

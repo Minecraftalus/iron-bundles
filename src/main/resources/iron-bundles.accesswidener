@@ -33,3 +33,5 @@ accessible field net/minecraft/client/gui/screens/inventory/tooltip/ClientBundle
 accessible field net/minecraft/client/gui/screens/inventory/tooltip/ClientBundleTooltip PROGRESSBAR_FILL_SPRITE Lnet/minecraft/resources/ResourceLocation;
 accessible field net/minecraft/client/gui/screens/inventory/tooltip/ClientBundleTooltip BUNDLE_EMPTY_TEXT Lnet/minecraft/network/chat/Component;
 accessible field net/minecraft/client/gui/screens/inventory/tooltip/ClientBundleTooltip BUNDLE_FULL_TEXT Lnet/minecraft/network/chat/Component;
+accessible method net/minecraft/world/item/component/BundleContents$Mutable findStackIndex (Lnet/minecraft/world/item/ItemStack;)I
+accessible field net/minecraft/world/item/component/BundleContents$Mutable weight Lorg/apache/commons/lang3/math/Fraction;
