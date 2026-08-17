@@ -104,17 +104,17 @@ public class IronBundlesContents extends BundleContents {
     }
 
     static {
-        CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ItemStack.CODEC.listOf().fieldOf("items").forGetter(c -> c.items),
-            Codec.STRING.xmap(Fraction::getFraction, Fraction::toString).fieldOf("max_weight").forGetter(contents -> contents.maxWeight)
-        ).apply(instance, (items, maxWeight) -> checkAndCreate(items, maxWeight).getOrThrow()));
+        CODEC = RecordCodecBuilder.create(
+            instance -> instance.group(
+                ItemStack.CODEC.listOf().fieldOf("items").forGetter(c -> c.items),
+                Codec.STRING.xmap(Fraction::getFraction, Fraction::toString).fieldOf("max_weight").forGetter(contents -> contents.maxWeight))
+                .apply(instance, (items, maxWeight) -> checkAndCreate(items, maxWeight).getOrThrow()));
 
         STREAM_CODEC = StreamCodec.composite(
             ItemStack.STREAM_CODEC.apply(ByteBufCodecs.list()),
             c -> c.items,
             ByteBufCodecs.STRING_UTF8.map(Fraction::getFraction, Fraction::toString),
             c -> c.maxWeight,
-            (items, maxWeight) -> new IronBundlesContents(items, computeContentWeight(items), -1, maxWeight)
-        );
+            (items, maxWeight) -> new IronBundlesContents(items, computeContentWeight(items), -1, maxWeight));
     }
 }

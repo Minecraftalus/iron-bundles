@@ -2,7 +2,6 @@ package io.github.minecraftalus.ironbundles.data;
 
 import java.util.concurrent.CompletableFuture;
 
-import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -38,11 +37,10 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
                     .save(exporter);
 
                 TransmuteRecipeBuilder.transmute(
-                        RecipeCategory.TOOLS,
-                        Ingredient.of(IronBundlesItems.IRON_BUNDLE),
-                        Ingredient.of(Items.BLUE_DYE),
-                        IronBundlesItems.GOLD_BUNDLE
-                    )
+                    RecipeCategory.TOOLS,
+                    Ingredient.of(IronBundlesItems.IRON_BUNDLE),
+                    Ingredient.of(Items.BLUE_DYE),
+                    IronBundlesItems.GOLD_BUNDLE)
                     .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
                     .save(exporter);
             }

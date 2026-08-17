@@ -15,7 +15,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickAction;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.tooltip.BundleTooltip;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ public class IronBundleItem extends BundleItem {
     public @NotNull Optional<TooltipComponent> getTooltipImage(ItemStack itemStack) {
         return !itemStack.has(DataComponents.HIDE_TOOLTIP) && !itemStack.has(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
             ? Optional.ofNullable(itemStack.get(IronBundlesComponents.IRON_BUNDLES_CONTENTS)).map(
-            (contents) -> new IronBundleTooltip(contents, maxWeight))
+                (contents) -> new IronBundleTooltip(contents, maxWeight))
             : Optional.empty();
     }
 
@@ -130,22 +129,26 @@ public class IronBundleItem extends BundleItem {
 
     @Override
     public boolean isBarVisible(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(maxWeight));
         return bundleContents.weight().compareTo(Fraction.ZERO) > 0;
     }
 
     @Override
     public int getBarWidth(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(maxWeight));
-        return Math.min(1 + Mth.mulAndTruncate(bundleContents.weight().divideBy(this.maxWeight), 12),
+        return Math.min(
+            1 + Mth.mulAndTruncate(bundleContents.weight().divideBy(this.maxWeight), 12),
             MAX_BAR_WIDTH);
     }
 
     @Override
     public int getBarColor(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(maxWeight));
         return bundleContents.weight().compareTo(this.maxWeight) >= 0 ? FULL_BAR_COLOR : BAR_COLOR;
     }
@@ -160,13 +163,15 @@ public class IronBundleItem extends BundleItem {
     }
 
     public static boolean hasSelectedItem(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getSelectedItem() != -1;
     }
 
     public static int getSelectedItem(ItemStack itemStack) {
-        IronBundlesContents bundleContents = itemStack.getOrDefault(IronBundlesComponents.IRON_BUNDLES_CONTENTS,
+        IronBundlesContents bundleContents = itemStack.getOrDefault(
+            IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(Fraction.ONE));
         return bundleContents.getSelectedItem();
     }

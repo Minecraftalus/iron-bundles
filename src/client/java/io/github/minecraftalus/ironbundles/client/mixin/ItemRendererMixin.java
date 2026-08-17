@@ -38,13 +38,18 @@ public class ItemRendererMixin {
 
             if (IronBundleItem.hasSelectedItem(itemStack)) {
                 boolean bl2 = ItemRenderer.shouldRenderItemFlat(itemDisplayContext);
-                BakedModel bakedModel2 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openBackModel()), itemStack, level,
-                    livingEntity, k);
+                BakedModel bakedModel2 = thiz.resolveModelOverride(
+                    thiz.itemModelShaper.getItemModel(bundleItem.openBackModel()),
+                    itemStack,
+                    level,
+                    livingEntity,
+                    k);
                 thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel2, bl2, -1.5F);
                 ItemStack itemStack2 = IronBundleItem.getSelectedItemStack(itemStack);
                 BakedModel bakedModel3 = thiz.getModel(itemStack2, level, livingEntity, k);
                 thiz.renderSimpleItemModel(itemStack2, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel3, bl2);
-                BakedModel bakedModel4 = thiz.resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openFrontModel()), itemStack, level, livingEntity, k);
+                BakedModel bakedModel4 = thiz
+                    .resolveModelOverride(thiz.itemModelShaper.getItemModel(bundleItem.openFrontModel()), itemStack, level, livingEntity, k);
                 thiz.renderItemModelRaw(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel4, bl2, 0.5F);
             } else {
                 thiz.render(itemStack, itemDisplayContext, bl, poseStack, multiBufferSource, i, j, bakedModel);

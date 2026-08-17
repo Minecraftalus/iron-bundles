@@ -1,8 +1,6 @@
 package io.github.minecraftalus.ironbundles.client.gui;
 
 import io.github.minecraftalus.ironbundles.item.component.IronBundlesContents;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientBundleTooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

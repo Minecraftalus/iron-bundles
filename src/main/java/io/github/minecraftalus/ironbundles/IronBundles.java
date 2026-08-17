@@ -1,6 +1,5 @@
 package io.github.minecraftalus.ironbundles;
 
-import io.github.minecraftalus.ironbundles.item.IronBundleItem;
 import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +19,7 @@ public class IronBundles implements ModInitializer {
         IronBundlesComponents.bootstrap();
         IronBundlesItems.bootstrap();
         IronBundlesRecipes.bootstrap();
-        //((IronBundleItem) resultStack.getItem()).upgrade();
+        // ((IronBundleItem) resultStack.getItem()).upgrade();
 
         LOGGER.info("Hello Fabric world!");
     }
