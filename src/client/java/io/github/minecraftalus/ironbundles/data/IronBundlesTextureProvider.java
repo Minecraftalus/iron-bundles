@@ -6,14 +6,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import javax.imageio.ImageIO;
 
 import com.google.common.hash.Hashing;
+import io.github.minecraftalus.ironbundles.IronBundleListUtils;
 import io.github.minecraftalus.ironbundles.IronBundles;
 import io.github.minecraftalus.ironbundles.item.IronBundlesItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 public class IronBundlesTextureProvider implements DataProvider {
     private final FabricDataOutput dataOutput;
     private final PackOutput.PathProvider pathProvider;
+    private final Map<String, BufferedImage> imageCache = new HashMap<>();
 
     public IronBundlesTextureProvider(FabricDataOutput packOutput) {
         this.dataOutput = packOutput;
@@ -35,22 +37,33 @@ public class IronBundlesTextureProvider implements DataProvider {
     }
 
     private void createTextureProvider(Consumer<LayeredTextureHolder> textureConsumer) {
-        layeredItemTexture(
-            IronBundlesItems.IRON_BUNDLE,
-            vanillaTexture("bundle"),
-            modTexture("iron_overlay"),
-            textureConsumer);
-        layeredItemTexture(
-            IronBundlesItems.GOLD_BUNDLE,
-            vanillaTexture("red_bundle"),
-            modTexture("iron_overlay"),
-            textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.IRON_BUNDLES, "iron_overlay", textureConsumer);
     }
 
-    private void layeredItemTexture(Item item, ResourceLocation layer0, ResourceLocation layer1, Consumer<LayeredTextureHolder> textureConsumer) {
+    private void generateBundleTierTextures(List<Item> items, String overlayName, Consumer<LayeredTextureHolder> textureConsumer) {
+        layeredItemTexture(
+            ModelLocationUtils.getModelLocation(items.getFirst()),
+            vanillaItemLocation("bundle"),
+            modItemLocation(overlayName),
+            textureConsumer);
+
+        for (int i = 1; i < items.size() - 1; i++) {
+            String color = IronBundleListUtils.dyeNameMappings.get(i - 1).getValue();
+            layeredItemTexture(
+                ModelLocationUtils.getModelLocation(items.get(i)),
+                vanillaItemLocation(color + "_bundle"),
+                modItemLocation(overlayName),
+                textureConsumer);
+
+        }
+
+    }
+
+    private void layeredItemTexture(
+        ResourceLocation location, ResourceLocation layer0, ResourceLocation layer1, Consumer<LayeredTextureHolder> textureConsumer) {
         textureConsumer.accept(
             new LayeredTextureHolder(
-                ModelLocationUtils.getModelLocation(item),
+                location,
                 layer0,
                 layer1));
     }
@@ -97,11 +110,11 @@ public class IronBundlesTextureProvider implements DataProvider {
         cachedOutput.writeIfNeeded(path, bytes, Hashing.sha1().hashBytes(bytes));
     }
 
-    private static ResourceLocation vanillaTexture(String path) {
+    private static ResourceLocation vanillaItemLocation(String path) {
         return ResourceLocation.withDefaultNamespace("item/" + path);
     }
 
-    private static ResourceLocation modTexture(String path) {
+    private static ResourceLocation modItemLocation(String path) {
         return ResourceLocation.fromNamespaceAndPath(IronBundles.MOD_ID, "item/" + path);
     }
 
@@ -116,6 +129,10 @@ public class IronBundlesTextureProvider implements DataProvider {
     private BufferedImage loadItemTexture(ResourceLocation location) throws IOException {
         String assetPath = "assets/" + location.getNamespace() + "/textures/" + location.getPath() + ".png";
 
+        BufferedImage existingImage = imageCache.get(assetPath);
+        if (existingImage != null)
+            return existingImage;
+
         Path foundPath = null;
 
         if (location.getNamespace().equals(IronBundles.MOD_ID)) {
@@ -129,7 +146,9 @@ public class IronBundlesTextureProvider implements DataProvider {
                     foundPath = Path.of(url.toURI());
                 } catch (Exception ignored) {
                     try (var inputStream = url.openStream()) {
-                        return ImageIO.read(inputStream);
+                        BufferedImage img = ImageIO.read(inputStream);
+                        imageCache.put(assetPath, img);
+                        return img;
                     }
                 }
             }
@@ -137,7 +156,9 @@ public class IronBundlesTextureProvider implements DataProvider {
 
         if (foundPath != null && Files.exists(foundPath)) {
             try (var inputStream = Files.newInputStream(foundPath)) {
-                return ImageIO.read(inputStream);
+                BufferedImage img = ImageIO.read(inputStream);
+                imageCache.put(assetPath, img);
+                return img;
             }
         }
 

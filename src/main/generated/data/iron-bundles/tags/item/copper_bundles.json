@@ -1,0 +1,21 @@
+{
+  "values": [
+    "iron-bundles:copper_bundle",
+    "iron-bundles:white_copper_bundle",
+    "iron-bundles:orange_copper_bundle",
+    "iron-bundles:magenta_copper_bundle",
+    "iron-bundles:light_blue_copper_bundle",
+    "iron-bundles:yellow_copper_bundle",
+    "iron-bundles:lime_copper_bundle",
+    "iron-bundles:pink_copper_bundle",
+    "iron-bundles:gray_copper_bundle",
+    "iron-bundles:light_gray_copper_bundle",
+    "iron-bundles:cyan_copper_bundle",
+    "iron-bundles:purple_copper_bundle",
+    "iron-bundles:blue_copper_bundle",
+    "iron-bundles:brown_copper_bundle",
+    "iron-bundles:green_copper_bundle",
+    "iron-bundles:red_copper_bundle",
+    "iron-bundles:black_copper_bundle"
+  ]
+}

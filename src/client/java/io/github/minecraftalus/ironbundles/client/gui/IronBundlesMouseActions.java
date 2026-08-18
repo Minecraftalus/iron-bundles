@@ -22,7 +22,7 @@ public class IronBundlesMouseActions implements ItemSlotMouseAction {
     }
 
     public boolean matches(Slot slot) {
-        return slot.getItem().is(IronBundlesTags.IRON_BUNDLES);
+        return slot.getItem().is(IronBundlesTags.IRON_BUNDLES_MOD_BUNDLES);
     }
 
     public boolean onMouseScrolled(double d, double e, int i, ItemStack itemStack) {

@@ -27,9 +27,9 @@ public class IronBundleItem extends BundleItem {
     private final Fraction maxWeight;
 
     public IronBundleItem(
-        ResourceLocation resourceLocation, ResourceLocation resourceLocation2, Fraction maxWeight, Properties properties
+        ResourceLocation front, ResourceLocation back, Fraction maxWeight, Properties properties
     ) {
-        super(resourceLocation, resourceLocation2, properties);
+        super(front, back, properties);
         this.maxWeight = maxWeight;
     }
 

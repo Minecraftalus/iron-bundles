@@ -18,15 +18,31 @@ public class IronBundlesItemTagProvider extends FabricTagProvider.ItemTagProvide
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
+        getOrCreateTagBuilder(IronBundlesTags.COPPER_BUNDLES)
+            .addAll(IronBundlesItems.COPPER_RESOURCE_KEYS);
         getOrCreateTagBuilder(IronBundlesTags.IRON_BUNDLES)
-            .add(IronBundlesItems.IRON_BUNDLE)
-            .add(IronBundlesItems.GOLD_BUNDLE);
+            .addAll(IronBundlesItems.IRON_RESOURCE_KEYS);
+        getOrCreateTagBuilder(IronBundlesTags.GOLD_BUNDLES)
+            .addAll(IronBundlesItems.GOLD_RESOURCE_KEYS);
+        getOrCreateTagBuilder(IronBundlesTags.EMERALD_BUNDLES)
+            .addAll(IronBundlesItems.EMERALD_RESOURCE_KEYS);
+        getOrCreateTagBuilder(IronBundlesTags.DIAMOND_BUNDLES)
+            .addAll(IronBundlesItems.DIAMOND_RESOURCE_KEYS);
+        getOrCreateTagBuilder(IronBundlesTags.NETHERITE_BUNDLES)
+            .addAll(IronBundlesItems.NETHERITE_RESOURCE_KEYS);
+
+        getOrCreateTagBuilder(IronBundlesTags.IRON_BUNDLES_MOD_BUNDLES)
+            .addAll(IronBundlesItems.COPPER_RESOURCE_KEYS)
+            .addAll(IronBundlesItems.IRON_RESOURCE_KEYS)
+            .addAll(IronBundlesItems.GOLD_RESOURCE_KEYS)
+            .addAll(IronBundlesItems.EMERALD_RESOURCE_KEYS)
+            .addAll(IronBundlesItems.DIAMOND_RESOURCE_KEYS)
+            .addAll(IronBundlesItems.NETHERITE_RESOURCE_KEYS);
 
         getOrCreateTagBuilder(ItemTags.BUNDLES)
-            .add(IronBundlesItems.IRON_BUNDLE)
-            .add(IronBundlesItems.GOLD_BUNDLE);
+            .addTag(IronBundlesTags.IRON_BUNDLES_MOD_BUNDLES);
 
-        getOrCreateTagBuilder(IronBundlesTags.LEATHER_BUNDLES)
+        getOrCreateTagBuilder(IronBundlesTags.VANILLA_BUNDLES)
             .add(Items.BUNDLE)
             .add(Items.WHITE_BUNDLE)
             .add(Items.ORANGE_BUNDLE)
@@ -44,7 +60,6 @@ public class IronBundlesItemTagProvider extends FabricTagProvider.ItemTagProvide
             .add(Items.GREEN_BUNDLE)
             .add(Items.RED_BUNDLE)
             .add(Items.BLACK_BUNDLE);
-
     }
 
     @Override

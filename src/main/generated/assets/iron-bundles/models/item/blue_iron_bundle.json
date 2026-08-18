@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iron-bundles:item/blue_iron_bundle"
+  }
+}

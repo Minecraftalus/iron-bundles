@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelTemplates;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 public class IronBundlesModelProvider extends FabricModelProvider {
@@ -20,8 +21,9 @@ public class IronBundlesModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
-        itemModelGenerator.generateFlatItem(IronBundlesItems.IRON_BUNDLE, ModelTemplates.FLAT_ITEM);
-        itemModelGenerator.generateFlatItem(IronBundlesItems.GOLD_BUNDLE, ModelTemplates.FLAT_ITEM);
+        for (Item bundle : IronBundlesItems.getAllBundleItems()) {
+            itemModelGenerator.generateFlatItem(bundle, ModelTemplates.FLAT_ITEM);
+        }
     }
 
     @Override

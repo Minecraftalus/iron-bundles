@@ -10,7 +10,7 @@ public enum BundleTier {
     DIAMOND(64 * 10),
     NETHERITE(64 * 16);
 
-    private Fraction weight;
+    private final Fraction weight;
 
     BundleTier(int itemCount) {
         this.weight = Fraction.getFraction(itemCount, 64);

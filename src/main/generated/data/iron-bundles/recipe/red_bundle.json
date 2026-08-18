@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:vanilla_bundles",
+  "material": "minecraft:red_dye",
+  "result": "minecraft:red_bundle"
+}

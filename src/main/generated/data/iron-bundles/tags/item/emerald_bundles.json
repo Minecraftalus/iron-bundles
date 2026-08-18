@@ -1,0 +1,21 @@
+{
+  "values": [
+    "iron-bundles:emerald_bundle",
+    "iron-bundles:white_emerald_bundle",
+    "iron-bundles:orange_emerald_bundle",
+    "iron-bundles:magenta_emerald_bundle",
+    "iron-bundles:light_blue_emerald_bundle",
+    "iron-bundles:yellow_emerald_bundle",
+    "iron-bundles:lime_emerald_bundle",
+    "iron-bundles:pink_emerald_bundle",
+    "iron-bundles:gray_emerald_bundle",
+    "iron-bundles:light_gray_emerald_bundle",
+    "iron-bundles:cyan_emerald_bundle",
+    "iron-bundles:purple_emerald_bundle",
+    "iron-bundles:blue_emerald_bundle",
+    "iron-bundles:brown_emerald_bundle",
+    "iron-bundles:green_emerald_bundle",
+    "iron-bundles:red_emerald_bundle",
+    "iron-bundles:black_emerald_bundle"
+  ]
+}

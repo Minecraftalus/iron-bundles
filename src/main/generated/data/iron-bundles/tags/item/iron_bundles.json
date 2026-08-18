@@ -1,6 +1,21 @@
 {
   "values": [
     "iron-bundles:iron_bundle",
-    "iron-bundles:gold_bundle"
+    "iron-bundles:white_iron_bundle",
+    "iron-bundles:orange_iron_bundle",
+    "iron-bundles:magenta_iron_bundle",
+    "iron-bundles:light_blue_iron_bundle",
+    "iron-bundles:yellow_iron_bundle",
+    "iron-bundles:lime_iron_bundle",
+    "iron-bundles:pink_iron_bundle",
+    "iron-bundles:gray_iron_bundle",
+    "iron-bundles:light_gray_iron_bundle",
+    "iron-bundles:cyan_iron_bundle",
+    "iron-bundles:purple_iron_bundle",
+    "iron-bundles:blue_iron_bundle",
+    "iron-bundles:brown_iron_bundle",
+    "iron-bundles:green_iron_bundle",
+    "iron-bundles:red_iron_bundle",
+    "iron-bundles:black_iron_bundle"
   ]
 }

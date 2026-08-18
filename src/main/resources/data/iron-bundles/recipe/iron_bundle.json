@@ -1,7 +1,0 @@
-{
-    "type": "iron-bundles:crafting_bundle_upgrade",
-    "category": "equipment",
-    "input": "minecraft:bundle",
-    "material": "minecraft:iron_ingot",
-    "result": "iron-bundles:iron_bundle"
-}
