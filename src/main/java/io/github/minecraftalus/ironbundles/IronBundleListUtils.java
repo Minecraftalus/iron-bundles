@@ -1,6 +1,7 @@
 package io.github.minecraftalus.ironbundles;
 
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Map;
 public class IronBundleListUtils {
     public static final List<Map.Entry<Item, String>> dyeNameMappings;
     public static final List<Map.Entry<Item, Item>> dyeBundleMappings;
+    public static final List<Item> vanillaBundles;
 
     static {
         List<Map.Entry<Item, String>> dyeNameTemp = new ArrayList<>();
@@ -49,10 +51,38 @@ public class IronBundleListUtils {
         dyeBundleTemp.add(getEntry(Items.RED_DYE, Items.RED_BUNDLE));
         dyeBundleTemp.add(getEntry(Items.BLACK_DYE, Items.BLACK_BUNDLE));
         dyeBundleMappings = List.copyOf(dyeBundleTemp);
+
+        List<Item> vanillaBundlesTemp = new ArrayList<>();
+        vanillaBundlesTemp.add(Items.BUNDLE);
+        vanillaBundlesTemp.add(Items.WHITE_BUNDLE);
+        vanillaBundlesTemp.add(Items.ORANGE_BUNDLE);
+        vanillaBundlesTemp.add(Items.MAGENTA_BUNDLE);
+        vanillaBundlesTemp.add(Items.LIGHT_BLUE_BUNDLE);
+        vanillaBundlesTemp.add(Items.YELLOW_BUNDLE);
+        vanillaBundlesTemp.add(Items.LIME_BUNDLE);
+        vanillaBundlesTemp.add(Items.PINK_BUNDLE);
+        vanillaBundlesTemp.add(Items.GRAY_BUNDLE);
+        vanillaBundlesTemp.add(Items.LIGHT_GRAY_BUNDLE);
+        vanillaBundlesTemp.add(Items.CYAN_BUNDLE);
+        vanillaBundlesTemp.add(Items.PURPLE_BUNDLE);
+        vanillaBundlesTemp.add(Items.BLUE_BUNDLE);
+        vanillaBundlesTemp.add(Items.BROWN_BUNDLE);
+        vanillaBundlesTemp.add(Items.GREEN_BUNDLE);
+        vanillaBundlesTemp.add(Items.RED_BUNDLE);
+        vanillaBundlesTemp.add(Items.BLACK_BUNDLE);
+        vanillaBundles = List.copyOf(vanillaBundlesTemp);
     }
 
     private static <K, V> Map.Entry<K, V> getEntry(K one, V two) {
         return Map.entry(one, two);
+    }
+
+    public static List<ItemStack> itemsToItemStacks(List<Item> items) {
+        List<ItemStack> stacks = new ArrayList<>();
+        for (Item item : items) {
+            stacks.add(new ItemStack(item));
+        }
+        return stacks;
     }
 
 }

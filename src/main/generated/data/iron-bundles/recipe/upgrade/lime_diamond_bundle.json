@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:lime_emerald_bundle",
+  "material": "iron-bundles:diamond_upgrade_item",
+  "result": "iron-bundles:lime_diamond_bundle"
+}

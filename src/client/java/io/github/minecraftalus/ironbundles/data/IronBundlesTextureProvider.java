@@ -37,26 +37,46 @@ public class IronBundlesTextureProvider implements DataProvider {
     }
 
     private void createTextureProvider(Consumer<LayeredTextureHolder> textureConsumer) {
-        generateBundleTierTextures(IronBundlesItems.IRON_BUNDLES, "iron_overlay", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.COPPER_BUNDLES, "copper", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.IRON_BUNDLES, "iron", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.GOLD_BUNDLES, "gold", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.EMERALD_BUNDLES, "emerald", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.DIAMOND_BUNDLES, "diamond", textureConsumer);
+        generateBundleTierTextures(IronBundlesItems.NETHERITE_BUNDLES, "netherite", textureConsumer);
     }
 
     private void generateBundleTierTextures(List<Item> items, String overlayName, Consumer<LayeredTextureHolder> textureConsumer) {
+        String overlay = overlayName+"_overlay";
+
+        generateBundleTexturePair(items.getFirst(),
+            "",
+            overlay,
+            textureConsumer
+        );
+
+        for (int i = 1; i < items.size(); i++) {
+            String color = IronBundleListUtils.dyeNameMappings.get(i - 1).getValue();
+            generateBundleTexturePair(items.get(i),
+                color,
+                overlay,
+                textureConsumer
+            );
+        }
+    }
+
+    private void generateBundleTexturePair(Item item, String color, String overlayName, Consumer<LayeredTextureHolder> textureConsumer) {
+        ResourceLocation location = ModelLocationUtils.getModelLocation(item);
+        String vanillaTexture = (color.isEmpty() ? "" : color + "_") + "bundle";
         layeredItemTexture(
-            ModelLocationUtils.getModelLocation(items.getFirst()),
-            vanillaItemLocation("bundle"),
+            location,
+            vanillaItemLocation(vanillaTexture),
             modItemLocation(overlayName),
             textureConsumer);
-
-        for (int i = 1; i < items.size() - 1; i++) {
-            String color = IronBundleListUtils.dyeNameMappings.get(i - 1).getValue();
-            layeredItemTexture(
-                ModelLocationUtils.getModelLocation(items.get(i)),
-                vanillaItemLocation(color + "_bundle"),
-                modItemLocation(overlayName),
-                textureConsumer);
-
-        }
-
+        layeredItemTexture(
+            location.withSuffix("_open_front"),
+            vanillaItemLocation(vanillaTexture + "_open_front"),
+            modItemLocation(overlayName + "_open"),
+            textureConsumer);
     }
 
     private void layeredItemTexture(

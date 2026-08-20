@@ -176,7 +176,7 @@ public class IronBundleItem extends BundleItem {
         return bundleContents.getSelectedItem();
     }
 
-    public static ItemStack getSelectedItemStack(ItemStack itemStack) {
+    public static @NotNull ItemStack getSelectedItemStack(ItemStack itemStack) {
         IronBundlesContents bundleContents = itemStack.getOrDefault(
             IronBundlesComponents.IRON_BUNDLES_CONTENTS,
             IronBundlesContents.empty(Fraction.ONE));
@@ -248,10 +248,5 @@ public class IronBundleItem extends BundleItem {
             playDropContentsSound(level, player);
             player.awardStat(Stats.ITEM_USED.get(this));
         }
-    }
-
-    @Override
-    public boolean canFitInsideContainerItems() {
-        return false;
     }
 }

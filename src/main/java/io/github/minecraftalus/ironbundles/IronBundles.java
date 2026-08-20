@@ -8,10 +8,6 @@ import org.slf4j.LoggerFactory;
 
 public class IronBundles implements ModInitializer {
     public static final String MOD_ID = "iron-bundles";
-
-    // This logger is used to write text to the console and the log file.
-    // It is considered best practice to use your mod id as the logger's name.
-    // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
@@ -19,7 +15,6 @@ public class IronBundles implements ModInitializer {
         IronBundlesComponents.bootstrap();
         IronBundlesItems.bootstrap();
         IronBundlesRecipes.bootstrap();
-        // ((IronBundleItem) resultStack.getItem()).upgrade();
 
         LOGGER.info("Hello Fabric world!");
     }

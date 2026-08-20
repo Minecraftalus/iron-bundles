@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:white_iron_bundle",
+  "material": "iron-bundles:gold_upgrade_item",
+  "result": "iron-bundles:white_gold_bundle"
+}

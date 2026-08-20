@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "minecraft:black_bundle",
+  "material": "iron-bundles:copper_upgrade_item",
+  "result": "iron-bundles:black_copper_bundle"
+}

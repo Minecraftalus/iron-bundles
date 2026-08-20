@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "minecraft:orange_bundle",
+  "material": "iron-bundles:copper_upgrade_item",
+  "result": "iron-bundles:orange_copper_bundle"
+}

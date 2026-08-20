@@ -3,13 +3,13 @@
 	"id": "iron-bundles",
 	"version": "${version}",
 	"name": "Iron Bundles",
-	"description": "Upgradable Bundles",
+	"description": "6 new tiers of bundles for better inventory management",
 	"authors": [
 		"Minecraftalus"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Minecraftalus",
+		"sources": "https://github.com/Minecraftalus/iron-bundles"
 	},
 	"license": "MIT",
 	"icon": "assets/iron-bundles/icon.png",

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:emerald_bundles",
+  "material": "minecraft:yellow_dye",
+  "result": "iron-bundles:yellow_emerald_bundle"
+}

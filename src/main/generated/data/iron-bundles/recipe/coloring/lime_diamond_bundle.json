@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:diamond_bundles",
+  "material": "minecraft:lime_dye",
+  "result": "iron-bundles:lime_diamond_bundle"
+}

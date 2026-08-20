@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:blue_copper_bundle",
+  "material": "iron-bundles:iron_upgrade_item",
+  "result": "iron-bundles:blue_iron_bundle"
+}

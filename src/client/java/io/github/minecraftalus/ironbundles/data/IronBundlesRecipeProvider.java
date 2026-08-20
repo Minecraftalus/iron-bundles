@@ -12,6 +12,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -30,32 +31,83 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
             public void buildRecipes() {
                 HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
 
-//                TransmuteRecipeBuilder.transmute(
-//                    RecipeCategory.TOOLS,
-//                    Ingredient.of(IronBundlesItems.IRON_BUNDLE),
-//                    Ingredient.of(Items.GOLD_INGOT),
-//                    IronBundlesItems.GOLD_BUNDLE)
-//                    .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
-//                    .save(exporter);
+                upgradeItemRecipe(IronBundlesItems.COPPER_UPGRADE_ITEM, Items.COPPER_INGOT, Items.STRING, this, exporter);
+                upgradeItemRecipe(IronBundlesItems.IRON_UPGRADE_ITEM, Items.IRON_INGOT, IronBundlesItems.COPPER_UPGRADE_ITEM, this, exporter);
+                upgradeItemRecipe(IronBundlesItems.GOLD_UPGRADE_ITEM, Items.GOLD_INGOT, IronBundlesItems.IRON_UPGRADE_ITEM, this, exporter);
+                upgradeItemRecipe(IronBundlesItems.EMERALD_UPGRADE_ITEM, Items.EMERALD, IronBundlesItems.GOLD_UPGRADE_ITEM, this, exporter);
+                upgradeItemRecipe(IronBundlesItems.DIAMOND_UPGRADE_ITEM, Items.DIAMOND, IronBundlesItems.EMERALD_UPGRADE_ITEM, this, exporter);
+                netheriteSmithing(IronBundlesItems.DIAMOND_UPGRADE_ITEM, RecipeCategory.MISC, IronBundlesItems.NETHERITE_UPGRADE_ITEM);
+
+                bundleColorRecipes(IronBundlesItems.COPPER_BUNDLES, IronBundlesTags.COPPER_BUNDLES, this, itemLookup, exporter);
+                bundleColorRecipes(IronBundlesItems.IRON_BUNDLES, IronBundlesTags.IRON_BUNDLES, this, itemLookup, exporter);
+                bundleColorRecipes(IronBundlesItems.GOLD_BUNDLES, IronBundlesTags.GOLD_BUNDLES, this, itemLookup, exporter);
+                bundleColorRecipes(IronBundlesItems.EMERALD_BUNDLES, IronBundlesTags.EMERALD_BUNDLES, this, itemLookup, exporter);
+                bundleColorRecipes(IronBundlesItems.DIAMOND_BUNDLES, IronBundlesTags.DIAMOND_BUNDLES, this, itemLookup, exporter);
+                bundleColorRecipes(IronBundlesItems.NETHERITE_BUNDLES, IronBundlesTags.NETHERITE_BUNDLES, this, itemLookup, exporter);
+
+                bundleUpgradeRecipes(
+                    IronBundleListUtils.vanillaBundles, IronBundlesItems.COPPER_BUNDLES,
+                    IronBundlesItems.COPPER_UPGRADE_ITEM, this, exporter);
+                bundleUpgradeRecipes(
+                    IronBundlesItems.COPPER_BUNDLES, IronBundlesItems.IRON_BUNDLES,
+                    IronBundlesItems.IRON_UPGRADE_ITEM, this, exporter);
+                bundleUpgradeRecipes(
+                    IronBundlesItems.IRON_BUNDLES, IronBundlesItems.GOLD_BUNDLES,
+                    IronBundlesItems.GOLD_UPGRADE_ITEM, this, exporter);
+                bundleUpgradeRecipes(
+                    IronBundlesItems.GOLD_BUNDLES, IronBundlesItems.EMERALD_BUNDLES,
+                    IronBundlesItems.EMERALD_UPGRADE_ITEM, this, exporter);
+                bundleUpgradeRecipes(
+                    IronBundlesItems.EMERALD_BUNDLES, IronBundlesItems.DIAMOND_BUNDLES,
+                    IronBundlesItems.DIAMOND_UPGRADE_ITEM, this, exporter);
+                bundleUpgradeRecipes(
+                    IronBundlesItems.DIAMOND_BUNDLES, IronBundlesItems.NETHERITE_BUNDLES,
+                    IronBundlesItems.NETHERITE_UPGRADE_ITEM, this, exporter);
 
                 overrideVanillaColors(this, itemLookup, exporter);
-
-//                BundleUpgradeRecipeBuilder.upgrade(
-//                        RecipeCategory.TOOLS,
-//                        Ingredient.of(Items.BUNDLE),
-//                        Ingredient.of(Items.IRON_INGOT),
-//                        IronBundlesItems.IRON_BUNDLE)
-//                    .group("")
-//                    .unlockedBy(getHasName(Items.HONEYCOMB), has(Items.HONEYCOMB))
-//                    .save(output);
-
             }
         };
     }
 
+    private void upgradeItemRecipe(Item result, Item material, Item previous, RecipeProvider provider, RecipeOutput exporter) {
+      provider.shaped(RecipeCategory.MISC, result)
+          .pattern(" p ")
+          .pattern("psp")
+          .pattern(" p ")
+          .define('p', material)
+          .define('s', previous)
+          .unlockedBy(RecipeProvider.getHasName(material), provider.has(material))
+          .unlockedBy(RecipeProvider.getHasName(previous), provider.has(previous))
+          .save(exporter);
+    }
+
+    private void bundleUpgradeRecipes(List<Item> lowerTierItems, List<Item> higherTierItems, Item upgradeItem, RecipeProvider provider, RecipeOutput exporter) {
+        for (int i = 0; i < lowerTierItems.size(); i++) {
+            BundleUpgradeRecipeBuilder.upgrade(
+                    RecipeCategory.TOOLS,
+                    Ingredient.of(lowerTierItems.get(i)),
+                    Ingredient.of(upgradeItem),
+                    higherTierItems.get(i))
+                .unlockedBy(RecipeProvider.getHasName(upgradeItem), provider.has(upgradeItem))
+                .save(exporter, upgradeLocation(higherTierItems.get(i)));
+        }
+    }
+
+    private void bundleColorRecipes(List<Item> tierItems, TagKey<Item> tierKey, RecipeProvider provider, HolderLookup.RegistryLookup<Item> lookup, RecipeOutput exporter) {
+        List<Map.Entry<Item, Item>> dyeColors = IronBundleListUtils.dyeBundleMappings;
+        for (int i = 1; i < tierItems.size(); i++) {
+            TransmuteRecipeBuilder.transmute(
+                    RecipeCategory.TOOLS,
+                    Ingredient.of(lookup.getOrThrow(tierKey)),
+                    Ingredient.of(dyeColors.get(i - 1).getKey()),
+                    tierItems.get(i))
+                .unlockedBy(RecipeProvider.getHasName(dyeColors.get(i - 1).getKey()), provider.has(dyeColors.get(i - 1).getKey()))
+                .save(exporter, colorLocation(tierItems.get(i)));
+        }
+    }
+
     private void overrideVanillaColors(RecipeProvider provider, HolderLookup.RegistryLookup<Item> lookup, RecipeOutput exporter) {
         for (Map.Entry<Item, Item> pair : IronBundleListUtils.dyeBundleMappings) {
-            // new recipe
             TransmuteRecipeBuilder.transmute(
                     RecipeCategory.TOOLS,
                     Ingredient.of(lookup.getOrThrow(IronBundlesTags.VANILLA_BUNDLES)),
@@ -63,21 +115,8 @@ public class IronBundlesRecipeProvider extends FabricRecipeProvider {
                     pair.getValue())
                 .unlockedBy(RecipeProvider.getHasName(pair.getKey()), provider.has(pair.getKey()))
                 .save(exporter);
-
-            // remove old recipe
-//            TransmuteRecipeBuilder.transmute(
-//                    RecipeCategory.TOOLS,
-//                    Ingredient.of(lookup.getOrThrow(ItemTags.BUNDLES)),
-//                    Ingredient.of(pair.getKey()),
-//                    Items.AIR)
-//                .unlockedBy(RecipeProvider.getHasName(pair.getKey()), provider.has(pair.getKey()))
-//                .save(exporter);
         }
 
-    }
-
-    private static Map.Entry<Item, Item> getEntry(Item one, Item two) {
-        return new AbstractMap.SimpleEntry<>(one, two);
     }
 
     private static ResourceKey<Recipe<?>> upgradeLocation(Item result) {

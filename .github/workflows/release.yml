@@ -1,0 +1,57 @@
+name: Build and Release Mod
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Minecraft Mod
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Set up jdk
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Build Mod
+        run: ./gradlew build
+
+      - name: Prepare Artifacts
+        run: |
+          mkdir -p staging
+          cp build/libs/*.jar staging/
+
+      - name: Upload Mod JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: mod-jar
+          path: staging/
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: mod-jar
+          path: ./dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.jar
+          generate_release_notes: true

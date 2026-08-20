@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": "minecraft:copper_ingot",
+    "s": "minecraft:string"
+  },
+  "pattern": [
+    " p ",
+    "psp",
+    " p "
+  ],
+  "result": {
+    "count": 1,
+    "id": "iron-bundles:copper_upgrade_item"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:iron_bundles",
+  "material": "minecraft:cyan_dye",
+  "result": "iron-bundles:cyan_iron_bundle"
+}

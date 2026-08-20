@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "minecraft:white_bundle",
+  "material": "iron-bundles:copper_upgrade_item",
+  "result": "iron-bundles:white_copper_bundle"
+}

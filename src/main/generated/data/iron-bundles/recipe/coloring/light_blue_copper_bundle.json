@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:copper_bundles",
+  "material": "minecraft:light_blue_dye",
+  "result": "iron-bundles:light_blue_copper_bundle"
+}

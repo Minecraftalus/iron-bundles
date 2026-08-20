@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_transmute",
+  "category": "equipment",
+  "input": "#iron-bundles:netherite_bundles",
+  "material": "minecraft:green_dye",
+  "result": "iron-bundles:green_netherite_bundle"
+}

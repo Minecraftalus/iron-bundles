@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iron-bundles:item/yellow_gold_bundle_open_front"
+  }
+}

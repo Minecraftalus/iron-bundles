@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:lime_diamond_bundle",
+  "material": "iron-bundles:netherite_upgrade_item",
+  "result": "iron-bundles:lime_netherite_bundle"
+}

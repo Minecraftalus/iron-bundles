@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:yellow_gold_bundle",
+  "material": "iron-bundles:emerald_upgrade_item",
+  "result": "iron-bundles:yellow_emerald_bundle"
+}

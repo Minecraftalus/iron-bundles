@@ -1,0 +1,7 @@
+{
+  "type": "iron-bundles:crafting_bundle_upgrade",
+  "category": "equipment",
+  "input": "iron-bundles:light_blue_diamond_bundle",
+  "material": "iron-bundles:netherite_upgrade_item",
+  "result": "iron-bundles:light_blue_netherite_bundle"
+}

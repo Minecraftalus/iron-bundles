@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": "minecraft:emerald",
+    "s": "iron-bundles:gold_upgrade_item"
+  },
+  "pattern": [
+    " p ",
+    "psp",
+    " p "
+  ],
+  "result": {
+    "count": 1,
+    "id": "iron-bundles:emerald_upgrade_item"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_iron_upgrade_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "iron-bundles:iron_upgrade_item"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iron-bundles:upgrade/white_iron_bundle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_iron_upgrade_item"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iron-bundles:upgrade/white_iron_bundle"
+    ]
+  }
+}
